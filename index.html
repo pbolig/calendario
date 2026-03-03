@@ -1480,6 +1480,7 @@
       const user = document.getElementById('login-user').value;
       const pass = document.getElementById('login-pass').value;
       try {
+        localStorage.removeItem('cal_token'); // Limpiar token previo por las dudas
         const data = await apiFetch('/auth/login/', {
           method: 'POST',
           body: JSON.stringify({ username: user, password: pass })
@@ -1532,9 +1533,11 @@
           document.getElementById('username-display').innerText = currentUser.username;
           loadCalendars();
         } else {
+          localStorage.removeItem('cal_token');
           document.getElementById('auth-overlay').style.display = 'flex';
         }
       } catch (err) {
+        localStorage.removeItem('cal_token');
         document.getElementById('auth-overlay').style.display = 'flex';
       }
     }
