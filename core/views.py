@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from rest_framework.authtoken.models import Token
 from .models import Category, Event, StickyNote, Calendar
 from .serializers import CategorySerializer, EventSerializer, StickyNoteSerializer, CalendarSerializer
 
@@ -20,7 +21,8 @@ class RegisterView(APIView):
         user = User.objects.create_user(username=username, password=password)
         # Create a default calendar for the new user
         Calendar.objects.create(user=user, name='Planificación Anual')
-        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+        token = Token.objects.create(user=user)
+        return Response({'message': 'User created successfully', 'token': token.key}, status=status.HTTP_201_CREATED)
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -31,11 +33,17 @@ class LoginView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({'message': 'Logged in successfully'})
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({'message': 'Logged in successfully', 'token': token.key})
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutView(APIView):
     def post(self, request):
+        if request.user.is_authenticated:
+            try:
+                request.user.auth_token.delete()
+            except Exception:
+                pass
         logout(request)
         return Response({'message': 'Logged out successfully'})
 

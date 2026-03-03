@@ -1406,10 +1406,11 @@
       const user = document.getElementById('login-user').value;
       const pass = document.getElementById('login-pass').value;
       try {
-        await apiFetch('/auth/login/', {
+        const data = await apiFetch('/auth/login/', {
           method: 'POST',
           body: JSON.stringify({ username: user, password: pass })
         });
+        if (data && data.token) localStorage.setItem('cal_token', data.token);
         showToast('Bienvenido!', 'success');
         checkAuthStatus();
       } catch (err) {
@@ -1430,10 +1431,11 @@
       }
 
       try {
-        const resp = await apiFetch('/auth/register/', {
+        const data = await apiFetch('/auth/register/', {
           method: 'POST',
           body: JSON.stringify({ username: user, password: pass })
         });
+        if (data && data.token) localStorage.setItem('cal_token', data.token);
         showToast('Registro exitoso. Ahora puedes ingresar.', 'success');
         toggleAuth(true);
       } catch (err) {
@@ -1443,7 +1445,11 @@
 
     async function checkAuthStatus() {
       try {
-        const resp = await fetch(`${API_BASE}/auth/user/`, { credentials: 'include' });
+        const token = localStorage.getItem('cal_token');
+        if (!token) throw new Error('No token');
+        const resp = await fetch(`${API_BASE}/auth/user/`, {
+          headers: { 'Authorization': `Token ${token}` }
+        });
         if (resp.ok) {
           currentUser = await resp.json();
           document.getElementById('auth-overlay').style.display = 'none';
@@ -1463,6 +1469,7 @@
       try {
         await apiFetch('/auth/logout/', { method: 'POST' });
       } catch (e) { }
+      localStorage.removeItem('cal_token');
       location.reload();
     }
 
@@ -1522,14 +1529,16 @@
 
     // ── API CALLS ────────────────────────────────────────────────────────────────
     async function apiFetch(path, options = {}) {
+      const headers = {
+        'Content-Type': 'application/json',
+        ...options.headers
+      };
+      const token = localStorage.getItem('cal_token');
+      if (token) headers['Authorization'] = `Token ${token}`;
+
       const resp = await fetch(`${API_BASE}${path}`, {
-        credentials: 'include',
         ...options,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken'),
-          ...options.headers
-        }
+        headers
       });
       if (!resp.ok) throw new Error(`API Error: ${resp.status}`);
       return resp.status !== 204 ? await resp.json() : null;
