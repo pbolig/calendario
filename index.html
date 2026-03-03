@@ -1168,10 +1168,84 @@
       background: #1e293b;
       color: white;
     }
+
+    /* SPINNER */
+    #global-spinner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .spinner-circle {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--accent);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+        overflow: auto;
+      }
+
+      #sidebar {
+        width: 100%;
+        max-height: 45vh;
+        border-bottom: 2px solid #334155;
+        box-shadow: none;
+      }
+
+      #main {
+        overflow-x: auto;
+      }
+
+      #a4page {
+        transform-origin: top left;
+        transform: scale(0.9);
+        margin: 10px;
+      }
+
+      .auth-card {
+        width: 90%;
+        padding: 25px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #a4page {
+        transform: scale(0.75);
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- GLOBAL SPINNER -->
+  <div id="global-spinner">
+    <div class="spinner-circle"></div>
+    <div style="margin-top:15px; font-weight:700; font-family:'Nunito',sans-serif;">Procesando...</div>
+  </div>
 
   <!-- PDF loading overlay -->
   <div id="pdfloading">
@@ -1528,20 +1602,38 @@
     }
 
     // ── API CALLS ────────────────────────────────────────────────────────────────
-    async function apiFetch(path, options = {}) {
-      const headers = {
-        'Content-Type': 'application/json',
-        ...options.headers
-      };
-      const token = localStorage.getItem('cal_token');
-      if (token) headers['Authorization'] = `Token ${token}`;
+    let activeFetches = 0;
+    function showSpinner() {
+      activeFetches++;
+      document.getElementById('global-spinner').style.display = 'flex';
+    }
+    function hideSpinner() {
+      activeFetches--;
+      if (activeFetches <= 0) {
+        activeFetches = 0;
+        document.getElementById('global-spinner').style.display = 'none';
+      }
+    }
 
-      const resp = await fetch(`${API_BASE}${path}`, {
-        ...options,
-        headers
-      });
-      if (!resp.ok) throw new Error(`API Error: ${resp.status}`);
-      return resp.status !== 204 ? await resp.json() : null;
+    async function apiFetch(path, options = {}) {
+      showSpinner();
+      try {
+        const headers = {
+          'Content-Type': 'application/json',
+          ...options.headers
+        };
+        const token = localStorage.getItem('cal_token');
+        if (token) headers['Authorization'] = `Token ${token}`;
+
+        const resp = await fetch(`${API_BASE}${path}`, {
+          ...options,
+          headers
+        });
+        if (!resp.ok) throw new Error(`API Error: ${resp.status}`);
+        return resp.status !== 204 ? await resp.json() : null;
+      } finally {
+        hideSpinner();
+      }
     }
 
     async function loadData() {
@@ -1578,9 +1670,14 @@
           const div = document.createElement('div');
           div.className = 'sticky-note';
           div.style.backgroundColor = note.color || '#feff9c';
+          let safeText = note.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          let linkedText = safeText.replace(/(https?:\/\/[^\s]+|www\.[^\s]+)/g, function (url) {
+            let href = url.startsWith('http') ? url : 'http://' + url;
+            return '<a href="' + href + '" target="_blank" style="color:#2563eb;text-decoration:underline;">' + url + '</a>';
+          });
           div.innerHTML = `
             <button class="sticky-note-del" onclick="removeStickyNote(${note.id})">✖</button>
-            <div class="sticky-note-text">${note.text}</div>
+            <div class="sticky-note-text">${linkedText}</div>
           `;
           container.appendChild(div);
         });
