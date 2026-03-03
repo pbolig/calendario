@@ -1,0 +1,28 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+*.log
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Variables de entorno
+.env
+
+# Docker
+docker-compose.override.yml
+
+# IDEs y Editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store

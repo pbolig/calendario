@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Planificador ISET 57</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <!-- jsPDF + html2canvas independientes: más confiables que html2pdf wrapper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --sb: #1e293b;
+      --sbt: #e2e8f0;
+      --r: 12px;
+      --ch: 30px;
+      --accent: #38bdf8;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: 275px;
+      flex-shrink: 0;
+      background: var(--sb);
+      color: var(--sbt);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, .18);
+      z-index: 10;
+    }
+
+    #sbh {
+      background: linear-gradient(135deg, #0f172a, #1e3a5f);
+      padding: 18px 16px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+      flex-shrink: 0;
+    }
+
+    #sbh h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    #sbh p {
+      font-size: .68rem;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    #user-info {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #f87171;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.65rem;
+    }
+
+    .btn-logout:hover {
+      background: rgba(248, 113, 113, 0.1);
+    }
+
+    .sbs {
+      padding: 13px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .sbs h3 {
+      font-size: .6rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #64748b;
+      margin-bottom: 9px;
+    }
+
+    .yr {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .yr label {
+      font-size: .74rem;
+      color: #94a3b8;
+    }
+
+    .yr input {
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #fff;
+      border-radius: 7px;
+      padding: 5px 8px;
+      width: 78px;
+      font-size: .85rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .rform {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .rrow {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .rrow input[type=text] {
+      flex: 1;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #fff;
+      border-radius: 7px;
+      padding: 6px 8px;
+      font-size: .78rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .rrow input[type=text]::placeholder {
+      color: #4b5563;
+    }
+
+    .rrow input[type=color] {
+      width: 32px;
+      height: 30px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      background: none;
+    }
+
+    .btnadd {
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 11px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: .78rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .btnadd:hover {
+      background: #7dd3fc;
+    }
+
+    .clist {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 150px;
+      overflow-y: auto;
+      margin-top: 7px;
+    }
+
+    .citem {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .05);
+      font-size: .76rem;
+    }
+
+    .citem:hover {
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .cdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .citem span {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cdel {
+      background: none;
+      border: none;
+      color: #f87171;
+      cursor: pointer;
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+
+    .dbtns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .btndata {
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: var(--sbt);
+      border-radius: 9px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .2s;
+    }
+
+    .btndata:hover {
+      background: rgba(56, 189, 248, .15);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    .btnfull {
+      width: 100%;
+      border: none;
+      border-radius: 9px;
+      padding: 9px 11px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+      transition: all .2s;
+    }
+
+    .btnfull:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    .mrow {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .mrow select {
+      flex: 1;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #fff;
+      border-radius: 7px;
+      padding: 7px;
+      font-size: .76rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .mrow select option {
+      background: #1e293b;
+    }
+
+    .btnmonth {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 7px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .btnmonth:hover {
+      opacity: .9;
+    }
+
+    /* MAIN */
+    #main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #a4page {
+      background: white;
+      border-radius: var(--r);
+      box-shadow: 0 6px 28px rgba(100, 116, 139, .13);
+      padding: 18px 22px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calh {
+      text-align: center;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      margin-bottom: 12px;
+    }
+
+    .calh .t1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: #1e293b;
+      display: block;
+    }
+
+    .calh .t2 {
+      font-size: .78rem;
+      color: #94a3b8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .mgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+    }
+
+    .mcard {
+      border-radius: 10px;
+      padding: 8px 9px 6px;
+      box-shadow: 0 2px 12px rgba(100, 116, 139, .1);
+    }
+
+    .mname {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: #334155;
+      border-left: 3px solid rgba(0, 0, 0, .15);
+      padding-left: 5px;
+      margin-bottom: 5px;
+    }
+
+    /* 5-column grid: Mon–Fri only */
+    .dcont {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: var(--ch);
+      gap: 2px;
+    }
+
+    .dlbl {
+      height: var(--ch);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .48rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .dcell {
+      height: var(--ch);
+      overflow: hidden;
+      border-radius: 3px;
+      padding: 2px 3px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      background: rgba(255, 255, 255, .7);
+      border: .5px solid rgba(0, 0, 0, .05);
+      position: relative;
+      transition: box-shadow .1s;
+    }
+
+    .dcell:hover {
+      box-shadow: 0 0 0 1.5px rgba(56, 189, 248, .65);
+      z-index: 2;
+    }
+
+    .selstart {
+      box-shadow: 0 0 0 2px #3b82f6 !important;
+      z-index: 5;
+    }
+
+    .dnum {
+      font-size: .58rem;
+      font-weight: 700;
+      color: #475569;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .dstack {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .dtxt {
+      font-size: .3rem;
+      line-height: 1.2;
+      color: #1e293b;
+      white-space: normal;
+      word-break: break-word;
+      overflow: hidden;
+      border-left: 1.5px solid rgba(0, 0, 0, .18);
+      padding-left: 1px;
+    }
+
+    .dcell[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: fixed;
+      left: var(--tx, 0);
+      top: var(--ty, 0);
+      background: rgba(15, 23, 42, .96);
+      color: #f8fafc;
+      padding: 7px 11px;
+      border-radius: 9px;
+      font-size: .72rem;
+      line-height: 1.5;
+      max-width: 280px;
+      min-width: 120px;
+      white-space: pre-wrap;
+      pointer-events: none;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .28);
+      z-index: 10000;
+    }
+
+    .legfoot {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1.5px solid #f1f5f9;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+    }
+
+    .legitem {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .62rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .legdot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* MODAL */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: none;
+    }
+
+    #modal {
+      position: fixed;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+      padding: 10px;
+      z-index: 9999;
+      display: none;
+      width: 290px;
+      border: 1px solid #e2e8f0;
+      animation: pop .15s ease;
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.92)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1)
+      }
+    }
+
+    .mlbl {
+      font-size: .64rem;
+      color: #94a3b8;
+      padding: 2px 6px 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    #mlist {
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    #mlist::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #mlist::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 99px;
+    }
+
+    .mcat {
+      padding: 6px 8px;
+      cursor: pointer;
+      font-size: .8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      transition: background .1s;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .mcat:hover {
+      background: #f1f5f9;
+    }
+
+    .mcat.sel {
+      background: #e0f2fe;
+      font-weight: 700;
+    }
+
+    .mdesc-wrap {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .mdesc-label {
+      font-size: .65rem;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    #mdesc {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: .78rem;
+      font-family: 'Nunito', sans-serif;
+      color: #1e293b;
+      resize: none;
+      height: 62px;
+      outline: none;
+      transition: border .2s;
+    }
+
+    #mdesc:focus {
+      border-color: #38bdf8;
+    }
+
+    #mdesc::placeholder {
+      color: #94a3b8;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .btn-apply {
+      flex: 1;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .dcell.today {
+      box-shadow: inset 0 0 0 2px #3b82f6, 0 0 15px rgba(59, 130, 246, 0.4);
+      background-color: #eff6ff !important;
+      z-index: 10;
+      animation: pulse-today 2s infinite;
+    }
+
+    @keyframes pulse-today {
+      0% {
+        box-shadow: inset 0 0 0 2px #3b82f6, 0 0 5px rgba(59, 130, 246, 0.2);
+      }
+
+      50% {
+        box-shadow: inset 0 0 0 2px #3b82f6, 0 0 15px rgba(59, 130, 246, 0.5);
+      }
+
+      100% {
+        box-shadow: inset 0 0 0 2px #3b82f6, 0 0 5px rgba(59, 130, 246, 0.2);
+      }
+    }
+
+    #upcoming-modal {
+      position: fixed;
+      display: none;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      z-index: 100001;
+      width: 400px;
+      max-height: 85vh;
+      overflow: hidden;
+      flex-direction: column;
+      border: 1px solid #e2e8f0;
+    }
+
+    .u-hdr {
+      padding: 12px 15px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .u-hdr h2 {
+      margin: 0;
+      font-size: 1rem;
+      color: #1e293b;
+      font-weight: 800;
+    }
+
+    .u-body {
+      padding: 15px;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .u-item {
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border-left: 4px solid #cbd5e1;
+      background: #f1f5f9;
+    }
+
+    .u-date {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 1px;
+    }
+
+    .u-text {
+      font-size: 0.8rem;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    .u-ftr {
+      padding: 10px 15px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 6px;
+      background: #f8fafc;
+      flex-shrink: 0;
+    }
+
+    .u-btn-print {
+      flex: 1;
+      background: #334155;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .u-btn-pdf {
+      flex: 1;
+      background: #0f172a;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .u-btn-close {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #upcoming-modal,
+      #upcoming-modal * {
+        visibility: visible;
+      }
+
+      #upcoming-modal {
+        position: static;
+        width: 100%;
+        max-height: none;
+        box-shadow: none;
+        border: none;
+        display: block !important;
+      }
+
+      .u-ftr,
+      .u-hdr button {
+        display: none !important;
+      }
+
+      .u-body {
+        overflow: visible;
+      }
+    }
+
+    .btn-apply:hover {
+      opacity: .9;
+    }
+
+    .btn-apply:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .btn-cancel-m {
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .btn-cancel-m:hover {
+      background: #e2e8f0;
+    }
+
+    .mclr {
+      color: #ef4444;
+      border-top: 1px solid #f1f5f9;
+      margin-top: 6px;
+      padding: 7px 8px;
+      cursor: pointer;
+      font-size: .76rem;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .mclr:hover {
+      background: #fff1f2;
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* PDF spinner overlay */
+    #pdfloading {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #pdfloading span {
+      color: white;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid rgba(255, 255, 255, .3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 99px;
+    }
+
+    /* ZONA PINCHE */
+    .cork-container {
+      margin-top: 15px;
+      background: #b48464;
+      /* Color base corcho */
+      background-image:
+        radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.15) 1px, transparent 0);
+      background-size: 4px 4px;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 4px solid #8d5d3f;
+      min-height: 200px;
+    }
+
+    .cork-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+      padding-bottom: 5px;
+    }
+
+    .sticky-note {
+      background: #feff9c;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      transform: rotate(-1deg);
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .sticky-note:nth-child(even) {
+      transform: rotate(1.5deg);
+    }
+
+    .sticky-note::before {
+      /* El alfiler o pin */
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .sticky-note-text {
+      font-size: 0.85rem;
+      color: #334155;
+      font-family: 'Nunito', sans-serif;
+      line-height: 1.3;
+      word-wrap: break-word;
+      font-weight: 600;
+    }
+
+    .sticky-note-del {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.7rem;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+
+    .sticky-note:hover .sticky-note-del {
+      opacity: 1;
+    }
+
+    .add-note-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.5);
+      color: white;
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .add-note-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .mname {
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .mname:hover {
+      background: rgba(0, 0, 0, 0.05);
+      transform: scale(1.05);
+    }
+
+    .mgrid.monthly-mode {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      height: auto;
+    }
+
+    .mcard.single-month {
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      height: auto;
+      --ch: 75px;
+      /* Altura base para celdas mensuales */
+    }
+
+    .mcard.single-month .mname {
+      font-size: 2.8rem !important;
+      margin-bottom: 20px;
+      border-left-width: 12px !important;
+    }
+
+    .mcard.single-month .dgrid {
+      grid-template-rows: auto repeat(6, 1fr);
+      font-size: 1.2rem;
+      gap: 4px;
+    }
+
+    .mcard.single-month .dlbl {
+      font-size: 1rem;
+      height: auto;
+      padding-bottom: 8px;
+    }
+
+    .mcard.single-month .dcell {
+      padding: 12px;
+      min-height: var(--ch);
+      border-radius: 8px;
+    }
+
+    .mcard.single-month .dnum {
+      font-size: 1.4rem;
+    }
+
+    .mcard.single-month .dtxt {
+      font-size: 0.85rem;
+      border-left-width: 3px;
+      padding-left: 6px;
+    }
+
+    #a4page.expand-mode {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 100%;
+      margin: 0;
+      flex: none;
+    }
+
+    .btn-back-annual {
+      width: 100%;
+      background: #475569;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      /* Se muestra solo en modo mensual */
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      animation: fadeIn 0.3s;
+    }
+
+    /* AUTH MODAL */
+    #auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: none;
+      /* Hidden by default */
+    }
+
+    .auth-card {
+      background: white;
+      width: 100%;
+      max-width: 380px;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .auth-card h2 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 25px;
+      color: #1e293b;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .auth-form input {
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .auth-btn {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .auth-switch {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .auth-switch span {
+      color: #0ea5e9;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* CALENDAR SELECTOR */
+    .cal-selector {
+      margin-bottom: 15px;
+    }
+
+    .cal-selector select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-radius: 7px;
+      padding: 8px;
+      font-size: 0.8rem;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+
+    }
+
+    #cal-select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.85rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    #cal-select option {
+      background: #1e293b;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PDF loading overlay -->
+  <div id="pdfloading">
+    <div class="spinner"></div>
+    <span>Generando PDF…</span>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div id="sbh">
+      <h1>Planificador Académico</h1>
+      <p>ISET N° 57</p>
+      <div id="user-info" style="display: none; margin-top: 10px;">
+        <span id="username-display" style="color: white; font-weight: 700;">Usuario</span>
+        <button class="btn-logout" onclick="logout()"
+          style="background: none; border: 1px solid rgba(255, 255, 255, 0.3); color: #f87171; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-size: 0.65rem; margin-left: 10px;">Cerrar
+          sesión</button>
+      </div>
+    </div>
+
+    <!-- Gestión de Calendarios -->
+    <div class="sbs" id="cal-manager" style="display: none;">
+      <h3>Mi Agenda</h3>
+      <div class="cal-selector">
+        <select id="cal-select" onchange="switchCalendar(this.value)">
+          <option value="">Cargando...</option>
+        </select>
+      </div>
+      <button class="btnadd" style="width: 100%; margin-top: 5px;" onclick="promptAddCalendar()">+ Nuevo
+        Calendario</button>
+    </div>
+    <div class="sbs">
+      <h3>Año</h3>
+      <div class="yr"><label>Año lectivo:</label>
+        <input type="number" id="yearLabel" value="2026" onchange="render()">
+      </div>
+      <button id="btn-back-annual" class="btn-back-annual" onclick="switchToAnnual()">⬅ Volver a Vista Anual</button>
+    </div>
+    <div class="sbs">
+      <h3>Referencias (tipo de evento)</h3>
+      <div class="rform">
+        <div class="rrow">
+          <input type="color" id="cat-color" value="#ffe0b2">
+          <input type="text" id="cat-name" placeholder="Ej: Feriado Nacional...">
+        </div>
+        <button class="btnadd" onclick="addCategory()">+ Agregar referencia</button>
+      </div>
+      <div id="cat-list-editor" class="clist"></div>
+    </div>
+    <div class="sbs">
+      <h3>Datos</h3>
+      <div class="dbtns">
+        <button class="btndata" onclick="downloadJSON()">💾 Exportar datos (.json)</button>
+        <button class="btndata" onclick="document.getElementById('fi').click()">📁 Importar datos (.json)</button>
+        <input type="file" id="fi" style="display:none" accept=".json" onchange="uploadJSON(event)">
+      </div>
+    </div>
+    <div class="sbs">
+      <h3>Exportar PDF</h3>
+      <button class="btnfull" onclick="exportPDFFull()">📄 Calendario anual (A4 vertical)</button>
+      <div class="mrow">
+        <select id="msel">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+        <button class="btnmonth" onclick="exportPDFMonth()">📅 Mes (A4 apaisado)</button>
+      </div>
+    </div>
+
+    <!-- ZONA PINCHE (Pizarrón de Corcho) -->
+    <div class="sbs">
+      <h3>Zona Pinche</h3>
+      <div class="cork-container">
+        <div class="cork-title">📌 Pizarrón de Notas</div>
+        <div id="sticky-list"></div>
+        <button class="add-note-btn" onclick="promptAddNote()">+ Pinchar nueva nota</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="overlay"></div>
+  <div id="modal">
+    <div class="mlbl">1 · Elegir tipo de evento</div>
+    <div id="mlist"></div>
+    <div class="mdesc-wrap">
+      <span class="mdesc-label">2 · Descripción específica (opcional)</span>
+      <textarea id="mdesc" placeholder="Ej: Inscripción a Exámenes Finales Segundo Turno…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-apply" id="btn-apply" onclick="applyFromModal()" disabled>✔ Aplicar al rango</button>
+      <button class="btn-cancel-m" onclick="cancelModal()">Cancelar</button>
+    </div>
+    <div class="mclr" onclick="clearSelectedRange()">❌ Limpiar días del rango</div>
+  </div>
+
+  <!-- UPCOMING EVENTS MODAL -->
+  <div id="upcoming-modal">
+    <div class="u-hdr">
+      <h2>Próximos 10 días</h2>
+    </div>
+    <div id="upcoming-list" class="u-body"></div>
+    <div class="u-ftr">
+      <button class="u-btn-print" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="u-btn-pdf" onclick="exportUpcomingPDF()">📥 Guardar PDF</button>
+      <button class="u-btn-close" onclick="closeUpcoming()">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- AUTH OVERLAY -->
+  <div id="auth-overlay">
+    <div class="auth-card" id="login-card">
+      <h2>Iniciar Sesión</h2>
+      <form class="auth-form" onsubmit="handleLogin(event)">
+        <input type="email" id="login-user" placeholder="Correo electrónico" required>
+        <input type="password" id="login-pass" placeholder="Contraseña" required>
+        <button type="submit" class="auth-btn">Ingresar</button>
+      </form>
+      <div class="auth-switch">
+        ¿No tienes cuenta? <span onclick="toggleAuth(false)">Regístrate</span>
+      </div>
+    </div>
+
+    <div class="auth-card" id="register-card" style="display: none;">
+      <h2>Crear Cuenta</h2>
+      <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">Regístrate para gestionar tus calendarios
+        personales.</p>
+      <form class="auth-form" onsubmit="handleRegister(event)">
+        <input type="email" id="reg-user" placeholder="Correo electrónico" required>
+        <input type="password" id="reg-pass" placeholder="Contraseña" required>
+        <input type="password" id="reg-pass-confirm" placeholder="Confirmar contraseña" required>
+        <button type="submit" class="auth-btn">Crear Cuenta</button>
+      </form>
+      <div class="auth-switch">
+        ¿Ya tienes cuenta? <span onclick="toggleAuth(true)">Inicia Sesión</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="a4page">
+      <div class="calh">
+        <span class="t1">Planificación Académica Anual</span>
+        <span class="t2" id="ydisplay">2026</span>
+      </div>
+      <div id="mgrid" class="mgrid"></div>
+      <div id="legfoot" class="legfoot"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── CONFIG ───────────────────────────────────────────────────────────────────
+    const API_BASE = '/api';
+    const MC = ["#fce4ec", "#f3e5f5", "#e8eaf6", "#e3f2fd", "#e0f7fa", "#e8f5e9",
+      "#fff8e1", "#fff3e0", "#fce4ec", "#e8eaf6", "#e0f2f1", "#f9fbe7"];
+    const MA = ["#f48fb1", "#ce93d8", "#9fa8da", "#90caf9", "#80deea", "#a5d6a7",
+      "#ffe082", "#ffcc80", "#f48fb1", "#9fa8da", "#80cbc4", "#dce775"];
+    const MN = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const DS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    // Only Mon(1)–Fri(5)
+    const WEEKDAYS = [1, 2, 3, 4, 5];
+    const DLABELS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
+
+    let db = {
+      categories: [],
+      events: {}
+    };
+    let selStart = null, selEnd = null, selCat = null;
+    let currentView = 'annual'; // 'annual' o 'monthly'
+    let selectedMonthIdx = 0;
+    let currentUser = null;
+    let calendars = [];
+    let currentCalId = null;
+    let authHeader = ""; // Para token si fuera necesario (usamos session cookies por ahora)
+
+    function switchToMonthly(idx) {
+      currentView = 'monthly';
+      selectedMonthIdx = idx;
+      document.getElementById('btn-back-annual').style.display = 'flex';
+      document.getElementById('a4page').classList.add('expand-mode');
+      render();
+    }
+
+    function switchToAnnual() {
+      currentView = 'annual';
+      document.getElementById('btn-back-annual').style.display = 'none';
+      document.getElementById('a4page').classList.remove('expand-mode');
+      render();
+    }
+
+    function showToast(msg, type = 'info') {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; 
+        border-radius: 10px; color: white; font-weight: 700; z-index: 10000;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transform: translateY(100px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: 'Nunito', sans-serif;
+      `;
+      toast.style.background = type === 'success' ? '#10b981' : (type === 'error' ? '#f43f5e' : '#3b82f6');
+      toast.innerText = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.style.transform = 'translateY(0)', 10);
+      setTimeout(() => {
+        toast.style.transform = 'translateY(100px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // ── AUTH LOGIC ──────────────────────────────────────────────────────────────
+    function toggleAuth(showLogin) {
+      document.getElementById('login-card').style.display = showLogin ? 'block' : 'none';
+      document.getElementById('register-card').style.display = showLogin ? 'none' : 'block';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value;
+      const pass = document.getElementById('login-pass').value;
+      try {
+        await apiFetch('/auth/login/', {
+          method: 'POST',
+          body: JSON.stringify({ username: user, password: pass })
+        });
+        showToast('Bienvenido!', 'success');
+        checkAuthStatus();
+      } catch (err) {
+        showToast('Credenciales inválidas', 'error');
+        console.error(err);
+      }
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const user = document.getElementById('reg-user').value;
+      const pass = document.getElementById('reg-pass').value;
+      const confirm = document.getElementById('reg-pass-confirm').value;
+
+      if (pass !== confirm) {
+        showToast('Las contraseñas no coinciden', 'error');
+        return;
+      }
+
+      try {
+        const resp = await apiFetch('/auth/register/', {
+          method: 'POST',
+          body: JSON.stringify({ username: user, password: pass })
+        });
+        showToast('Registro exitoso. Ahora puedes ingresar.', 'success');
+        toggleAuth(true);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function checkAuthStatus() {
+      try {
+        const resp = await fetch(`${API_BASE}/auth/user/`, { credentials: 'same-origin' });
+        if (resp.ok) {
+          currentUser = await resp.json();
+          document.getElementById('auth-overlay').style.display = 'none';
+          document.getElementById('user-info').style.display = 'flex';
+          document.getElementById('cal-manager').style.display = 'block';
+          document.getElementById('username-display').innerText = currentUser.username;
+          loadCalendars();
+        } else {
+          document.getElementById('auth-overlay').style.display = 'flex';
+        }
+      } catch (err) {
+        document.getElementById('auth-overlay').style.display = 'flex';
+      }
+    }
+
+    async function logout() {
+      try {
+        await apiFetch('/auth/logout/', { method: 'POST' });
+      } catch (e) { }
+      location.reload();
+    }
+
+    // ── CALENDAR LOGIC ──────────────────────────────────────────────────────────
+    async function loadCalendars() {
+      try {
+        calendars = await apiFetch('/calendars/');
+        const sel = document.getElementById('cal-select');
+        sel.innerHTML = calendars.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+        if (calendars.length > 0) {
+          if (!currentCalId) currentCalId = calendars[0].id;
+          sel.value = currentCalId;
+          loadData();
+        } else {
+          showToast('No tienes calendarios. Crea uno nuevo.', 'info');
+        }
+      } catch (err) {
+        console.error("Error cargando calendarios", err);
+      }
+    }
+
+    function switchCalendar(id) {
+      currentCalId = id;
+      loadData();
+    }
+
+    async function promptAddCalendar() {
+      const name = prompt("Nombre del nuevo calendario:");
+      if (!name) return;
+      try {
+        await apiFetch('/calendars/', {
+          method: 'POST',
+          body: JSON.stringify({ name })
+        });
+        showToast('Calendario creado', 'success');
+        loadCalendars();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    // ── API CALLS ────────────────────────────────────────────────────────────────
+    async function apiFetch(path, options = {}) {
+      const resp = await fetch(`${API_BASE}${path}`, {
+        credentials: 'same-origin',
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+          ...options.headers
+        }
+      });
+      if (!resp.ok) throw new Error(`API Error: ${resp.status}`);
+      return resp.status !== 204 ? await resp.json() : null;
+    }
+
+    async function loadData() {
+      if (!currentCalId) return;
+      try {
+        const cats = await apiFetch(`/categories/?calendar=${currentCalId}`);
+        const evts = await apiFetch(`/events/?calendar=${currentCalId}`);
+
+        db.categories = cats;
+        db.events = {};
+        evts.forEach(e => {
+          if (!db.events[e.date]) db.events[e.date] = [];
+          db.events[e.date].push({
+            id: e.id,
+            cat: e.category_name,
+            desc: e.description
+          });
+        });
+        render();
+        await loadStickyNotes(); // Cargar también las notas
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
+    }
+
+    // ── STICKY NOTES (ZONA PINCHE) ──────────────────────────────────────────────
+    async function loadStickyNotes() {
+      if (!currentCalId) return;
+      try {
+        const notes = await apiFetch(`/stickynotes/?calendar=${currentCalId}`);
+        const container = document.getElementById('sticky-list');
+        container.innerHTML = '';
+        notes.forEach(note => {
+          const div = document.createElement('div');
+          div.className = 'sticky-note';
+          div.style.backgroundColor = note.color || '#feff9c';
+          div.innerHTML = `
+            <button class="sticky-note-del" onclick="removeStickyNote(${note.id})">✖</button>
+            <div class="sticky-note-text">${note.text}</div>
+          `;
+          container.appendChild(div);
+        });
+      } catch (err) { console.error("Error al cargar notas:", err); }
+    }
+
+    async function promptAddNote() {
+      const text = prompt("¿Qué quieres pinchar en el pizarrón?");
+      if (!text || text.trim() === "") return;
+      const colors = ['#feff9c', '#ff7eb9', '#7afcff', '#ccff00', '#ffccd5'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      try {
+        await apiFetch('/stickynotes/', {
+          method: 'POST',
+          body: JSON.stringify({ calendar: currentCalId, text: text.trim(), color: randomColor })
+        });
+        await loadStickyNotes();
+      } catch (err) { alert("Error al guardar nota: " + err.message); }
+    }
+
+    async function removeStickyNote(id) {
+      if (!confirm("¿Deseas quitar esta nota del pizarrón?")) return;
+      try {
+        await apiFetch(`/stickynotes/${id}/`, { method: 'DELETE' });
+        await loadStickyNotes();
+      } catch (err) { alert("Error al eliminar nota: " + err.message); }
+    }
+
+    // ── HELPERS ──────────────────────────────────────────────────────────────────
+    function normEvts(raw) {
+      if (!raw) return [];
+      const arr = Array.isArray(raw) ? raw : [raw];
+      return arr.map(e => {
+        if (!e) return null;
+        if (typeof e === 'string') return { cat: e, desc: '' };
+        if (typeof e === 'object') {
+          if (e.cat) return { cat: String(e.cat), desc: String(e.desc || '') };
+          if (e.name) return { cat: String(e.name), desc: '' };
+        }
+        return { cat: String(e), desc: '' };
+      }).filter(Boolean);
+    }
+
+    // ── RENDER ───────────────────────────────────────────────────────────────────
+    function render() {
+      const yearInput = document.getElementById('yearLabel');
+      if (!yearInput) return;
+      const year = parseInt(yearInput.value);
+
+      const titleEl = document.querySelector('.calh .t1');
+      if (currentView === 'annual') {
+        titleEl.textContent = 'Planificación Académica Anual';
+        document.getElementById('ydisplay').textContent = year;
+      } else {
+        titleEl.textContent = `Planificación: ${MN[selectedMonthIdx]}`;
+        document.getElementById('ydisplay').textContent = year;
+      }
+
+      const container = document.getElementById('mgrid');
+      container.innerHTML = '';
+
+      if (currentView === 'annual') {
+        container.classList.remove('monthly-mode');
+        MN.forEach((name, idx) => {
+          const card = document.createElement('div');
+          card.className = 'mcard';
+          card.style.background = MC[idx];
+          const mn = document.createElement('div');
+          mn.className = 'mname';
+          mn.style.borderLeft = `5px solid ${MA[idx]}`;
+          mn.textContent = name;
+          mn.onclick = () => switchToMonthly(idx);
+          card.appendChild(mn);
+          card.appendChild(buildGrid(year, idx, true));
+          container.appendChild(card);
+        });
+      } else {
+        container.classList.add('monthly-mode');
+        const card = document.createElement('div');
+        card.className = 'mcard single-month';
+        card.style.background = MC[selectedMonthIdx];
+        const mn = document.createElement('div');
+        mn.className = 'mname';
+        mn.style.borderLeft = `8px solid ${MA[selectedMonthIdx]}`;
+        mn.style.fontSize = '1.8rem';
+        mn.style.marginBottom = '10px';
+        mn.textContent = MN[selectedMonthIdx];
+        card.appendChild(mn);
+        card.appendChild(buildGrid(year, selectedMonthIdx, true));
+        container.appendChild(card);
+      }
+      updateUI();
+    }
+
+    function buildGrid(year, mi, interactive) {
+      const g = document.createElement('div');
+      g.className = 'dcont';
+      DLABELS.forEach(d => {
+        const l = document.createElement('div');
+        l.className = 'dlbl'; l.textContent = d; g.appendChild(l);
+      });
+
+      const tot = new Date(year, mi + 1, 0).getDate();
+      let firstCol = 0;
+      for (let d = 1; d <= 7; d++) {
+        const wd = new Date(year, mi, d).getDay();
+        if (wd >= 1 && wd <= 5) { firstCol = wd - 1; break; }
+      }
+      for (let i = 0; i < firstCol; i++) {
+        const b = document.createElement('div'); b.style.height = 'var(--ch)'; g.appendChild(b);
+      }
+
+      for (let d = 1; d <= tot; d++) {
+        const dow = new Date(year, mi, d).getDay();
+        if (dow < 1 || dow > 5) continue;
+
+        const dateKey = `${year}-${String(mi + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const cell = document.createElement('div');
+        cell.className = 'dcell';
+
+        // Check if it's today
+        const now = new Date();
+        const isToday = now.getFullYear() === year && now.getMonth() === mi && now.getDate() === d;
+        if (isToday) cell.classList.add('today');
+
+        const cellId = `${year}-${mi}-${d}`;
+        if (selStart === cellId) cell.classList.add('selstart');
+        if (interactive) {
+          cell.addEventListener('click', e => {
+            if (isToday) {
+              showUpcomingModal(e);
+            } else {
+              handleClick(e, cellId);
+            }
+            e.stopPropagation();
+          });
+        }
+
+        const evts = normEvts(db.events[dateKey]);
+        const num = document.createElement('span');
+        num.className = 'dnum'; num.textContent = d;
+        cell.appendChild(num);
+
+        if (evts.length > 0) {
+          const colors = evts.map(ev => {
+            const c = db.categories.find(c => c.name === ev.cat);
+            return c ? c.color : '#e2e8f0';
+          });
+          if (colors.length === 1) {
+            cell.style.backgroundColor = colors[0] + 'cc';
+          } else {
+            const pct = 100 / colors.length;
+            const stops = colors.map((c, i) => `${c}cc ${i * pct}%, ${c}cc ${(i + 1) * pct}%`).join(', ');
+            cell.style.background = `linear-gradient(to bottom, ${stops})`;
+          }
+          const tipLines = evts.map(e => e.desc ? `${e.cat}: ${e.desc}` : e.cat);
+          cell.setAttribute('data-tooltip', `${DS[dow]} ${d} — ${MN[mi]}\n${tipLines.join('\n')}`);
+          const stack = document.createElement('div'); stack.className = 'dstack';
+          evts.forEach(ev => {
+            const t = document.createElement('span'); t.className = 'dtxt';
+            const c = db.categories.find(c => c.name === ev.cat);
+            if (c) t.style.borderLeftColor = c.color;
+            t.textContent = ev.desc || ev.cat;
+            stack.appendChild(t);
+          });
+          cell.appendChild(stack);
+        }
+        cell.addEventListener('mousemove', e => {
+          cell.style.setProperty('--tx', (e.clientX + 14) + 'px');
+          cell.style.setProperty('--ty', (e.clientY + 14) + 'px');
+        });
+        g.appendChild(cell);
+      }
+      return g;
+    }
+
+    // ── INTERACTION ──────────────────────────────────────────────────────────────
+    function handleClick(e, id) {
+      if (!selStart) { selStart = id; render(); }
+      else { selEnd = id; openModal(e); }
+    }
+
+    function openModal(e) {
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('overlay');
+      const list = document.getElementById('mlist');
+      selCat = null;
+      document.getElementById('btn-apply').disabled = true;
+      document.getElementById('mdesc').value = '';
+      list.innerHTML = '';
+      db.categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'mcat';
+        div.innerHTML = `<div style="width:11px;height:11px;border-radius:3px;background:${cat.color};flex-shrink:0;border:.5px solid rgba(0,0,0,.1)"></div><span>${cat.name}</span>`;
+        div.addEventListener('click', ev => {
+          ev.stopPropagation();
+          document.querySelectorAll('.mcat').forEach(el => el.classList.remove('sel'));
+          div.classList.add('sel');
+          selCat = cat;
+          document.getElementById('btn-apply').disabled = false;
+        });
+        list.appendChild(div);
+      });
+      const MW = 295, MH = 420;
+      let x = e.clientX + 14, y = e.clientY + 14;
+      if (x + MW > window.innerWidth - 8) x = e.clientX - MW - 4;
+      if (y + MH > window.innerHeight - 8) y = e.clientY - MH - 4;
+      if (y < 8) y = 8;
+      modal.style.left = x + 'px'; modal.style.top = y + 'px';
+      modal.style.display = 'block'; overlay.style.display = 'block';
+    }
+
+    async function applyFromModal() {
+      if (!selCat) return;
+      const desc = document.getElementById('mdesc').value.trim();
+      await applyRange(selStart, selEnd, selCat, desc);
+      hideModal();
+    }
+    function cancelModal() { selStart = null; selEnd = null; selCat = null; hideModal(); render(); }
+    function hideModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    async function applyRange(startId, endId, cat, desc) {
+      const parse = id => { const p = id.split('-'); return new Date(+p[0], +p[1], +p[2]); };
+      const d1 = parse(startId), d2 = parse(endId || startId);
+      const s = d1 <= d2 ? d1 : d2, en = d1 <= d2 ? d2 : d1;
+      let cur = new Date(s);
+
+      const promises = [];
+      while (cur <= en) {
+        const dow = cur.getDay();
+        if (dow >= 1 && dow <= 5) {
+          const dateStr = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, '0')}-${String(cur.getDate()).padStart(2, '0')}`;
+          promises.push(apiFetch('/events/', {
+            method: 'POST',
+            body: JSON.stringify({
+              calendar: currentCalId,
+              date: dateStr,
+              category: cat.id,
+              description: desc
+            })
+          }));
+        }
+        cur.setDate(cur.getDate() + 1);
+      }
+      await Promise.all(promises);
+      selStart = null; selEnd = null; selCat = null;
+      await loadData();
+    }
+
+    async function clearSelectedRange() {
+      const parse = id => { const p = id.split('-'); return new Date(+p[0], +p[1], +p[2]); };
+      const d1 = parse(selStart), d2 = selEnd ? parse(selEnd) : d1;
+      const s = d1 <= d2 ? d1 : d2, en = d1 <= d2 ? d2 : d1;
+
+      let cur = new Date(s);
+      const promises = [];
+      while (cur <= en) {
+        const dateKey = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, '0')}-${String(cur.getDate()).padStart(2, '0')}`;
+        const evts = db.events[dateKey] || [];
+        evts.forEach(ev => {
+          promises.push(apiFetch(`/events/${ev.id}/`, { method: 'DELETE' }));
+        });
+        cur.setDate(cur.getDate() + 1);
+      }
+      await Promise.all(promises);
+      selStart = null; selEnd = null; selCat = null; hideModal();
+      await loadData();
+    }
+
+    // ── UPCOMING EVENTS ──────────────────────────────────────────────────────────
+    let upcomingEventsData = [];
+
+    function showUpcomingModal(e) {
+      const modal = document.getElementById('upcoming-modal');
+      const overlay = document.getElementById('overlay');
+      const list = document.getElementById('upcoming-list');
+      list.innerHTML = '';
+      upcomingEventsData = [];
+
+      const now = new Date();
+      for (let i = 0; i < 10; i++) {
+        const check = new Date(now);
+        check.setDate(now.getDate() + i);
+        const k = `${check.getFullYear()}-${String(check.getMonth() + 1).padStart(2, '0')}-${String(check.getDate()).padStart(2, '0')}`;
+        const evs = normEvts(db.events[k]);
+        if (evs.length) {
+          evs.forEach(ev => {
+            upcomingEventsData.push({ date: new Date(check), ev });
+            const item = document.createElement('div');
+            item.className = 'u-item';
+            const cat = db.categories.find(c => c.name === ev.cat);
+            if (cat) item.style.borderLeftColor = cat.color;
+
+            item.innerHTML = `
+              <div class="u-date">${DS[check.getDay()]} ${check.getDate()} ${MN[check.getMonth()]}</div>
+              <div class="u-text">${ev.desc || ev.cat}</div>
+            `;
+            list.appendChild(item);
+          });
+        }
+      }
+      if (upcomingEventsData.length === 0) {
+        list.innerHTML = '<div style="text-align:center;color:#64748b;padding:20px;font-style:italic;">No hay eventos programados para los próximos 10 días.</div>';
+      }
+
+      const MW = 380, MH = 480;
+      let x = e.clientX + 14, y = e.clientY + 14;
+      if (x + MW > window.innerWidth) x = window.innerWidth - MW - 10;
+      if (y + MH > window.innerHeight) y = window.innerHeight - MH - 10;
+      if (y < 10) y = 10;
+      if (x < 10) x = 10;
+
+      modal.style.width = MW + 'px';
+      modal.style.height = 'auto';
+      modal.style.maxHeight = '90vh';
+      modal.style.left = x + 'px';
+      modal.style.top = y + 'px';
+      modal.style.display = 'flex';
+      overlay.style.display = 'block';
+    }
+
+    function closeUpcoming() {
+      document.getElementById('upcoming-modal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function exportUpcomingPDF() {
+      if (upcomingEventsData.length === 0) return alert("No hay eventos para exportar.");
+
+      renderToPDF((wrap) => {
+        const M = 40; wrap.style.padding = `${M}px`;
+        const hdr = document.createElement('div');
+        hdr.style.cssText = `text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid #e2e8f0;`;
+        hdr.innerHTML = `<div style="font-family:'Playfair Display',serif;font-size:22px;color:#0f172a;font-weight:700;">Recordatorio de Próximos Eventos</div><div style="font-size:11px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:5px;">ISET N° 57 · Próximos 10 días</div>`;
+        wrap.appendChild(hdr);
+
+        upcomingEventsData.forEach(item => {
+          const row = document.createElement('div');
+          const cat = db.categories.find(c => c.name === item.ev.cat);
+          const color = cat ? cat.color : '#e2e8f0';
+
+          row.style.cssText = `margin-bottom:12px;padding:10px 15px;background:${color}22;border-left:5px solid ${color};border-radius:6px;`;
+          row.innerHTML = `
+            <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:3px;text-transform:uppercase;">${DS[item.date.getDay()]} ${item.date.getDate()} ${MN[item.date.getMonth()]} ${item.date.getFullYear()}</div>
+            <div style="font-size:13px;color:#1e293b;font-weight:600;">${item.ev.desc || item.ev.cat}</div>
+          `;
+          wrap.appendChild(row);
+        });
+
+        const ftr = document.createElement('div');
+        ftr.style.cssText = `margin-top:20px;font-size:9px;color:#94a3b8;text-align:right;font-style:italic;`;
+        ftr.textContent = `Generado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}`;
+        wrap.appendChild(ftr);
+      }, `Recordatorio_10_dias_${new Date().toISOString().split('T')[0]}.pdf`, 'p');
+    }
+
+    document.getElementById('overlay').addEventListener('click', () => {
+      selStart = null; selEnd = null; selCat = null;
+      hideModal();
+      closeUpcoming();
+      render();
+    });
+
+    // ── UI ───────────────────────────────────────────────────────────────────────
+    function updateUI() {
+      const foot = document.getElementById('legfoot');
+      foot.innerHTML = '';
+      db.categories.forEach(c => {
+        foot.innerHTML += `<div class="legitem"><div class="legdot" style="background:${c.color}"></div>${c.name}</div>`;
+      });
+      const listEl = document.getElementById('cat-list-editor');
+      listEl.innerHTML = '';
+      db.categories.forEach((c, i) => {
+        const item = document.createElement('div'); item.className = 'citem';
+        item.innerHTML = `<div class="cdot" style="background:${c.color}"></div>
+      <span title="${c.name}">${c.name}</span>
+      <button class="cdel" onclick="removeCategory(${c.id}, '${c.name.replace(/'/g, "\\'")}')">🗑️</button>`;
+        listEl.appendChild(item);
+      });
+    }
+
+    async function addCategory() {
+      const n = document.getElementById('cat-name').value.trim();
+      const c = document.getElementById('cat-color').value;
+      if (n && currentCalId) {
+        try {
+          await apiFetch('/categories/', {
+            method: 'POST',
+            body: JSON.stringify({ calendar: currentCalId, name: n, color: c })
+          });
+          document.getElementById('cat-name').value = '';
+          await loadData();
+        } catch (err) {
+          alert("Error al agregar referencia: " + err.message);
+        }
+      }
+    }
+
+    async function removeCategory(id, name) {
+      if (!confirm(`¿Eliminar "${name}"?`)) return;
+      try {
+        await apiFetch(`/categories/${id}/`, { method: 'DELETE' });
+        await loadData();
+      } catch (err) {
+        alert("Error al eliminar categoría: " + err.message);
+      }
+    }
+
+    // ── JSON ────────────────────────────────────────────────────────────────────
+    function downloadJSON() {
+      const exportData = { categories: db.categories, events: {} };
+      Object.keys(db.events).forEach(k => {
+        exportData.events[k] = db.events[k].map(e => ({ cat: e.cat, desc: e.desc }));
+      });
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `planificacion_iset57_${document.getElementById('yearLabel').value}.json`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
+    }
+
+    // ── PDF ENGINE ───────────────────────────────────────────────────────────────
+    async function renderToPDF(pages, filename, orientation) {
+      const loading = document.getElementById('pdfloading');
+      if (loading) loading.style.display = 'flex';
+
+      const buildPages = Array.isArray(pages) ? pages : [pages];
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: orientation === 'l' ? 'landscape' : 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const W = orientation === 'l' ? 1122 : 794, H = orientation === 'l' ? 794 : 1122;
+
+      try {
+        for (let i = 0; i < buildPages.length; i++) {
+          if (i > 0) pdf.addPage();
+
+          const wrap = document.createElement('div');
+          wrap.style.cssText = `position:fixed;left:0;top:0;width:${W}px;height:${H}px;background:white;font-family:'Nunito',sans-serif;z-index:999990;overflow:hidden;`;
+          buildPages[i](wrap, W, H);
+          document.body.appendChild(wrap);
+
+          // Esperamos un poco más para asegurar el renderizado de la grilla compleja
+          await new Promise(r => setTimeout(r, i === 0 ? 600 : 300));
+
+          const canvas = await html2canvas(wrap, {
+            scale: 2, useCORS: true, logging: false, allowTaint: true,
+            width: W, height: H, scrollX: 0, scrollY: 0
+          });
+
+          pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+          document.body.removeChild(wrap);
+        }
+        pdf.save(filename);
+      } catch (err) {
+        console.error("PDF Error:", err);
+        alert("Error al generar PDF.");
+      } finally {
+        if (loading) loading.style.display = 'none';
+      }
+    }
+
+    function buildPDFCalendar(year, mi, cellH, numFontPx, txtFontPx) {
+      const tot = new Date(year, mi + 1, 0).getDate();
+      const bg = MC[mi], acc = MA[mi];
+      const wrap = document.createElement('div');
+      wrap.style.cssText = `border-radius:8px;padding:4px 5px;background:${bg};height:100%;display:flex;flex-direction:column;box-sizing:border-box;`;
+      const title = document.createElement('div');
+      title.style.cssText = `font-size:${numFontPx + 2}px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#334155;border-left:4px solid ${acc};padding-left:5px;margin-bottom:3px;flex-shrink:0;`;
+      title.textContent = MN[mi]; wrap.appendChild(title);
+
+      const grid = document.createElement('div');
+      // Forzamos 7 filas: 1 para etiquetas y 6 fijas para semanas para que todos los meses se alineen perfectamente
+      grid.style.cssText = `display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:20px repeat(6, 1fr);gap:1px;flex:1;min-height:0;`;
+
+      DLABELS.forEach(d => {
+        const l = document.createElement('div');
+        l.style.cssText = `display:flex;align-items:center;justify-content:center;font-size:${txtFontPx}px;font-weight:700;color:#64748b;`;
+        l.textContent = d; grid.appendChild(l);
+      });
+
+      let firstDay = new Date(year, mi, 1).getDay();
+      // Ajuste para Lunes-Viernes (L=1, V=5). El calendario original saltea S/D.
+      let offset = firstDay === 0 ? 0 : (firstDay === 6 ? 0 : firstDay - 1);
+      if (offset < 0) offset = 0;
+
+      // Un mes puede ocupar hasta 6 semanas. Mon-Fri = 5 col. 6 * 5 = 30 celdas.
+      // Pero algunos meses ocupan 6 semanas calendario. Usaremos 30 celdas fijas (6 semanas de 5 días).
+      for (let i = 0; i < offset; i++) {
+        const b = document.createElement('div');
+        b.style.cssText = `background:rgba(255,255,255,0.2);border-radius:2px;`;
+        grid.appendChild(b);
+      }
+
+      for (let d = 1; d <= tot; d++) {
+        const dow = new Date(year, mi, d).getDay();
+        if (dow < 1 || dow > 5) continue;
+
+        const dateKey = `${year}-${String(mi + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const evts = normEvts(db.events[dateKey]);
+        const colors = evts.map(ev => { const c = db.categories.find(c => c.name === ev.cat); return c ? c.color : '#e2e8f0'; });
+
+        let cellBg = 'rgba(255,255,255,.85)';
+        if (colors.length === 1) cellBg = colors[0] + 'aa';
+        else if (colors.length > 1) {
+          const pct = 100 / colors.length;
+          const stops = colors.map((c, i) => `${c}aa ${i * pct}%, ${c}aa ${(i + 1) * pct}%`).join(', ');
+          cellBg = `linear-gradient(to bottom, ${stops})`;
+        }
+
+        const cell = document.createElement('div');
+        cell.style.cssText = `border:.4px solid rgba(0,0,0,.08);border-radius:2px;padding:1px;overflow:hidden;display:flex;flex-direction:column;min-height:0;`;
+        cell.style.background = cellBg;
+
+        const num = document.createElement('span');
+        num.style.cssText = `font-size:${numFontPx}px;font-weight:800;color:#1e293b;line-height:1;margin-bottom:1px;flex-shrink:0;`;
+        num.textContent = d;
+        cell.appendChild(num);
+
+        const stack = document.createElement('div');
+        stack.style.cssText = `display:flex;flex-direction:column;gap:1px;flex:1;min-height:0;overflow:hidden;`;
+
+        evts.forEach((ev, idx) => {
+          const c = db.categories.find(cat => cat.name === ev.cat);
+          const t = document.createElement('div');
+          // Añadimos un pequeño borde inferior si hay más de un evento para separar
+          const isLast = idx === evts.length - 1;
+          t.style.cssText = `font-size:${txtFontPx - 0.5}px;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+            border-left:2px solid ${c ? c.color : '#94a3b8'};padding-left:2px;color:#000;font-weight:600;
+            ${!isLast ? 'border-bottom:0.2px solid rgba(0,0,0,0.1);padding-bottom:1px;' : ''}`;
+          t.textContent = ev.desc || ev.cat;
+          stack.appendChild(t);
+        });
+        cell.appendChild(stack);
+        grid.appendChild(cell);
+      }
+
+      // Rellenar hasta completar las 30 celdas (6 semanas de 5 días) para que todos los meses tengan igual tamaño
+      const currentCells = offset + (grid.querySelectorAll('.dcell, div:not(.dlbl)').length - offset);
+      // Nota: querySelectorAll arriba es conceptual, contaremos manualmente
+      const totalDaysInGrid = grid.children.length - 5; // Restamos los labels
+      const targetCells = 30;
+      for (let i = totalDaysInGrid; i < targetCells; i++) {
+        const b = document.createElement('div');
+        b.style.cssText = `background:rgba(255,255,255,0.2);border-radius:2px;`;
+        grid.appendChild(b);
+      }
+
+      wrap.appendChild(grid);
+      return wrap;
+    }
+
+    function buildDetailPanel(year, months, titlePx, datePx, descPx) {
+      const panel = document.createElement('div');
+      panel.style.cssText = `display:flex;flex-direction:column;overflow:hidden;border-left:2px solid #e2e8f0;padding-left:10px;box-sizing:border-box;`;
+      months.forEach((mi, mIdx) => {
+        const tot = new Date(year, mi + 1, 0).getDate();
+        const entries = [];
+        for (let d = 1; d <= tot; d++) {
+          const dow = new Date(year, mi, d).getDay();
+          if (dow < 1 || dow > 5) continue;
+          const dateKey = `${year}-${String(mi + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          const evts = normEvts(db.events[dateKey]);
+          if (evts.length) entries.push({ d, evts });
+        }
+        if (!entries.length && months.length > 1) return;
+        const mTitle = document.createElement('div');
+        mTitle.style.cssText = `font-size:${titlePx}px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#1e293b;border-left:4px solid ${MA[mi]};padding-left:5px;margin-bottom:4px;${mIdx > 0 ? 'margin-top:9px;' : ''}`;
+        mTitle.textContent = MN[mi]; panel.appendChild(mTitle);
+        if (!entries.length) {
+          const emp = document.createElement('div');
+          emp.style.cssText = `font-size:${descPx}px;color:#94a3b8;font-style:italic;margin-bottom:3px;padding-left:2px;`;
+          emp.textContent = 'Sin eventos registrados.'; panel.appendChild(emp); return;
+        }
+        const groups = [];
+        entries.forEach(entry => {
+          const label = entry.evts.map(e => e.desc || e.cat).join(' / ');
+          const cat = db.categories.find(c => c.name === entry.evts[0].cat);
+          const color = cat ? cat.color : '#e2e8f0';
+          const last = groups[groups.length - 1];
+          if (last && last.label === label) { last.end = entry.d; last.days.push(entry.d); }
+          else groups.push({ days: [entry.d], end: entry.d, label, color });
+        });
+        groups.forEach(g => {
+          const row = document.createElement('div');
+          const range = g.days.length > 1 ? `${g.days[0]}–${g.days[g.days.length - 1]}` : `${g.days[0]}`;
+          row.style.cssText = `display:flex;align-items:flex-start;gap:5px;padding:3px 5px 3px 4px;margin-bottom:3px;background:${g.color}44;border-radius:4px;border-left:3px solid ${g.color};`;
+          const ds = document.createElement('span');
+          ds.style.cssText = `font-size:${datePx}px;font-weight:800;color:#334155;flex-shrink:0;min-width:20px;line-height:1.4;`;
+          ds.textContent = range;
+          const tx = document.createElement('span');
+          tx.style.cssText = `font-size:${descPx}px;color:#334155;line-height:1.4;word-break:break-word;`;
+          tx.textContent = g.label; row.appendChild(ds); row.appendChild(tx); panel.appendChild(row);
+        });
+      });
+      return panel;
+    }
+
+    function exportPDFMonth() {
+      const year = parseInt(document.getElementById('yearLabel').value);
+      const mi = parseInt(document.getElementById('msel').value);
+      const mName = MN[mi];
+      renderToPDF((wrap, W, H) => {
+        const M = 40; wrap.style.padding = `${M}px`;
+        const hdr = document.createElement('div');
+        hdr.style.cssText = `text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;flex-shrink:0;`;
+        hdr.innerHTML = `<div style="font-family:'Playfair Display',serif;font-size:24px;color:#0f172a;font-weight:700;">${mName} ${year}</div><div style="font-size:11px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-weight:600;">Planificación Académica Mensual · ISET N° 57</div>`;
+        wrap.appendChild(hdr);
+        const body = document.createElement('div');
+        body.style.cssText = 'display:flex;flex:1;gap:0;overflow:hidden;height:0;flex-grow:1;min-height:0;';
+        wrap.style.display = 'flex'; wrap.style.flexDirection = 'column';
+        wrap.appendChild(body);
+        const leftW = document.createElement('div');
+        // Proporción 60/40 para dar más espacio a referencias
+        leftW.style.cssText = 'flex:0 0 60%;padding-right:20px;display:flex;flex-direction:column;height:100%;';
+        leftW.appendChild(buildPDFCalendar(year, mi, 0, 10, 8)); body.appendChild(leftW);
+        const rightW = document.createElement('div');
+        rightW.style.cssText = 'flex:0 0 40%;display:flex;flex-direction:column;overflow:hidden;height:100%;';
+        const dp = buildDetailPanel(year, [mi], 13, 11, 10); dp.style.flex = '1';
+        rightW.appendChild(dp); body.appendChild(rightW);
+      }, `Planificacion_${mName}_${year}.pdf`, 'l');
+    }
+
+    function exportPDFFull() {
+      const year = parseInt(document.getElementById('yearLabel').value);
+
+      const page1 = (wrap, W, H) => {
+        const M = 40; wrap.style.cssText += `;padding:${M}px;display:flex;flex-direction:column;`;
+        const hdr = document.createElement('div');
+        hdr.style.cssText = `text-align:center;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;flex-shrink:0;`;
+        hdr.innerHTML = `<div style="font-family:'Playfair Display',serif;font-size:22px;color:#0f172a;font-weight:700;">Planificación Académica Anual · ${year}</div><div style="font-size:11px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-weight:600;">Calendario General · ISET N° 57</div>`;
+        wrap.appendChild(hdr);
+
+        const grid = document.createElement('div');
+        grid.style.cssText = `display:grid;grid-template-columns:repeat(3, 1fr);grid-template-rows:repeat(4, 1fr);gap:12px;flex:1;min-height:0;`;
+        MN.forEach((_, idx) => {
+          const card = document.createElement('div');
+          card.style.cssText = 'min-height:0;overflow:hidden;display:flex;flex-direction:column;height:100%;';
+          card.appendChild(buildPDFCalendar(year, idx, 0, 7, 5));
+          grid.appendChild(card);
+        });
+        wrap.appendChild(grid);
+      };
+
+      const buildRefPage = (monthsIdx, titleSuffix) => (wrap, W, H) => {
+        const M = 40; wrap.style.cssText += `;padding:${M}px;display:flex;flex-direction:column;`;
+        const hdr = document.createElement('div');
+        hdr.style.cssText = `text-align:center;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;flex-shrink:0;`;
+        hdr.innerHTML = `<div style="font-family:'Playfair Display',serif;font-size:20px;color:#0f172a;font-weight:700;">Detalle de Eventos y Referencias · ${year}</div><div style="font-size:10px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:2px;font-weight:600;">Planificación Anual (${titleSuffix}) · ISET N° 57</div>`;
+        wrap.appendChild(hdr);
+
+        const body = document.createElement('div');
+        body.style.cssText = 'flex:1;overflow:hidden;min-height:0;';
+        // Aumentamos fuentes para mejor visibilidad: Título 15, Fecha 12, Desc 11
+        const dp = buildDetailPanel(year, monthsIdx, 15, 12, 11);
+        dp.style.borderLeft = 'none';
+        dp.style.paddingLeft = '0';
+        body.appendChild(dp);
+        wrap.appendChild(body);
+      };
+
+      // Hoja 2: Enero a Junio. Hoja 3: Julio a Diciembre.
+      const page2 = buildRefPage([0, 1, 2, 3, 4, 5], "Semestre 1");
+      const page3 = buildRefPage([6, 7, 8, 9, 10, 11], "Semestre 2");
+
+      renderToPDF([page1, page2, page3], `Planificacion_Anual_${year}.pdf`, 'p');
+    }
+
+    window.onload = checkAuthStatus;
+  </script>
+</body>
+
+</html>

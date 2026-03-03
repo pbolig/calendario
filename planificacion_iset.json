@@ -1,0 +1,882 @@
+{
+  "categories": [
+    {
+      "name": "Feriado Nacional",
+      "color": "#ffe0b2"
+    },
+    {
+      "name": "Receso Invernal",
+      "color": "#f8bbd0"
+    },
+    {
+      "name": "Mesas Examen",
+      "color": "#fff9c4"
+    },
+    {
+      "name": "Actividad Pedagógica",
+      "color": "#b3ffd0"
+    },
+    {
+      "name": "Tratamiento Administrativo",
+      "color": "#f2b3ff"
+    },
+    {
+      "name": "Información",
+      "color": "#b3c9ff"
+    }
+  ],
+  "events": {
+    "2026-2-9": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-10": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-11": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-12": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-13": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-16": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-17": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-18": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-19": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-20": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Curso introductorio (Propedéutico) para estudiantes ingresantes a primer año de las distintas carreras\n(carácter obligatorio)"
+      }
+    ],
+    "2026-2-26": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Inicio de Ciclo Lectivo"
+      }
+    ],
+    "2026-3-6": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Primera Jornada de la Práctica Docente de IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-3-7": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Primera Jornada de la Práctica Docente de IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-3-8": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Primera Jornada de la Práctica Docente de IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-3-9": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Primera Jornada de la Práctica Docente de IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-3-10": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Primera Jornada de la Práctica Docente de IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-3-13": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales (3 días hábiles). Generar las Actas\nde Examen en SIGAE WEB"
+      }
+    ],
+    "2026-3-14": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales (3 días hábiles). Generar las Actas\nde Examen en SIGAE WEB"
+      }
+    ],
+    "2026-3-15": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales (3 días hábiles). Generar las Actas\nde Examen en SIGAE WEB"
+      }
+    ],
+    "2026-3-20": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-3-21": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-3-22": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-3-23": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-3-24": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-3-30": [
+      {
+        "cat": "Información",
+        "desc": "Fecha oficial de corte de información de las trayectorias de la matrícula del Ciclo Lectivo 2025 y la matrícula\n2026 en SIGAE WEB"
+      }
+    ],
+    "2026-4-11": [
+      {
+        "cat": "Información",
+        "desc": "Finaliza el período para cargar los datos de los/las estudiantes ingresantes a Primer Año en SIGAE WEB"
+      }
+    ],
+    "2026-4-29": [
+      {
+        "cat": "Información",
+        "desc": "Finalización del plazo para los trámites de homologaciones"
+      }
+    ],
+    "2026-5-16": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-5-17": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-5-18": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-5-19": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-5-22": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Segundo Encuentro de Formación Continua). Tema: Alfabetización académica: Enseñanza\nde la escritura académica en el Nivel Superior"
+      }
+    ],
+    "2026-5-23": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Segundo Encuentro de Formación Continua). Tema: Alfabetización académica: Enseñanza\nde la escritura académica en el Nivel Superior"
+      }
+    ],
+    "2026-5-24": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Segundo Encuentro de Formación Continua). Tema: Alfabetización académica: Enseñanza\nde la escritura académica en el Nivel Superior"
+      }
+    ],
+    "2026-5-25": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Segundo Encuentro de Formación Continua). Tema: Alfabetización académica: Enseñanza\nde la escritura académica en el Nivel Superior"
+      }
+    ],
+    "2026-5-26": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales Segundo Turno (un llamado). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Segundo Encuentro de Formación Continua). Tema: Alfabetización académica: Enseñanza\nde la escritura académica en el Nivel Superior"
+      }
+    ],
+    "2026-6-3": [
+      {
+        "cat": "Información",
+        "desc": "Finalización del Primer Cuatrimestre"
+      }
+    ],
+    "2026-6-6": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-7": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-8": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-9": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-10": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-13": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-14": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-15": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-16": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-17": [
+      {
+        "cat": "Información",
+        "desc": "Receso escolar de invierno"
+      }
+    ],
+    "2026-6-20": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción a las unidades curriculares de 2do. a 4to. Año de la Formación Docente y 2do. y 3ro. de la\nFormación Técnica. Realizar la inscripción a las materias en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-21": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción a las unidades curriculares de 2do. a 4to. Año de la Formación Docente y 2do. y 3ro. de la\nFormación Técnica. Realizar la inscripción a las materias en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-22": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción a las unidades curriculares de 2do. a 4to. Año de la Formación Docente y 2do. y 3ro. de la\nFormación Técnica. Realizar la inscripción a las materias en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-23": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción a las unidades curriculares de 2do. a 4to. Año de la Formación Docente y 2do. y 3ro. de la\nFormación Técnica. Realizar la inscripción a las materias en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-24": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción a las unidades curriculares de 2do. a 4to. Año de la Formación Docente y 2do. y 3ro. de la\nFormación Técnica. Realizar la inscripción a las materias en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-27": [
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-28": [
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-29": [
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-30": [
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-6-31": [
+      {
+        "cat": "Información",
+        "desc": "Exámenes Finales Segundo Turno (un llamado). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-7-3": [
+      {
+        "cat": "Información",
+        "desc": "Inicio del Segundo Cuatrimestre"
+      }
+    ],
+    "2026-7-10": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales. Generar las Actas de Examen en\nSIGAE WEB"
+      }
+    ],
+    "2026-7-11": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales. Generar las Actas de Examen en\nSIGAE WEB"
+      }
+    ],
+    "2026-7-12": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales. Generar las Actas de Examen en\nSIGAE WEB"
+      }
+    ],
+    "2026-7-13": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales. Generar las Actas de Examen en\nSIGAE WEB"
+      }
+    ],
+    "2026-7-14": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Mesas Examinadoras Especiales. Generar las Actas de Examen en\nSIGAE WEB"
+      }
+    ],
+    "2026-7-24": [
+      {
+        "cat": "Información",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-7-25": [
+      {
+        "cat": "Información",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-7-26": [
+      {
+        "cat": "Información",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-7-27": [
+      {
+        "cat": "Información",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-7-28": [
+      {
+        "cat": "Información",
+        "desc": "Mesas Examinadoras Especiales. Carga de calificaciones en SIGAE WEB. Solicitar la emisión del Título en\ncaso que corresponda"
+      }
+    ],
+    "2026-8-1": [
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Tercer Encuentro de Formación Continua) Tema: Alfabetización académica:\nEnseñanza de la escritura académica en el Nivel Superior. Socialización de producciones (exposiciones\norales, publicaciones digitales escritas)"
+      }
+    ],
+    "2026-8-2": [
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Tercer Encuentro de Formación Continua) Tema: Alfabetización académica:\nEnseñanza de la escritura académica en el Nivel Superior. Socialización de producciones (exposiciones\norales, publicaciones digitales escritas)"
+      }
+    ],
+    "2026-8-3": [
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Tercer Encuentro de Formación Continua) Tema: Alfabetización académica:\nEnseñanza de la escritura académica en el Nivel Superior. Socialización de producciones (exposiciones\norales, publicaciones digitales escritas)"
+      }
+    ],
+    "2026-8-4": [
+      {
+        "cat": "Información",
+        "desc": "Jornada Institucional (Tercer Encuentro de Formación Continua) Tema: Alfabetización académica:\nEnseñanza de la escritura académica en el Nivel Superior. Socialización de producciones (exposiciones\norales, publicaciones digitales escritas)"
+      }
+    ],
+    "2026-8-21": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-22": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-23": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-24": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-25": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-28": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-29": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-8-30": [
+      {
+        "cat": "Información",
+        "desc": "Expo carreras de Nivel Superior. Jornadas de Articulación con Nivel Secundario"
+      }
+    ],
+    "2026-9-5": [
+      {
+        "cat": "Información",
+        "desc": "Segunda Jornada de la Práctica Docente para los IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-9-6": [
+      {
+        "cat": "Información",
+        "desc": "Segunda Jornada de la Práctica Docente para los IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-9-7": [
+      {
+        "cat": "Información",
+        "desc": "Segunda Jornada de la Práctica Docente para los IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-9-8": [
+      {
+        "cat": "Información",
+        "desc": "Segunda Jornada de la Práctica Docente para los IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-9-9": [
+      {
+        "cat": "Información",
+        "desc": "Segunda Jornada de la Práctica Docente para los IFD: Formadores y Co-formadores"
+      }
+    ],
+    "2026-10-2": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-3": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-4": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-5": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-6": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-9": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-10": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-11": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-12": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      }
+    ],
+    "2026-10-13": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes a Exámenes Finales 3er. Turno (dos llamados). Generar las Actas de\nExamen en SIGAE WEB"
+      },
+      {
+        "cat": "Información",
+        "desc": "Finalización del Segundo Cuatrimestre"
+      }
+    ],
+    "2026-10-16": [
+      {
+        "cat": "Información",
+        "desc": "Inicio periodo presentación de diseños y narrativas evaluativas de proyectos ABP en el campus educativo\nde Santa Fe"
+      }
+    ],
+    "2026-10-23": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-10-24": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-10-25": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-10-26": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-10-27": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-10-30": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-1": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-2": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-3": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-4": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-7": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-8": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-9": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-10": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-11": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Finalización ciclo lectivo"
+      }
+    ],
+    "2026-11-14": [
+      {
+        "cat": "Tratamiento Administrativo",
+        "desc": "Inscripción de los/las estudiantes ingresantes a Primer Año 2.027 (1era. Convocatoria). Realizar la pre-\ninscripción en SIGAE WEB"
+      },
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Período de evaluación institucional. Período de revisión y reflexión de la Práctica. Registro del mismo"
+      }
+    ],
+    "2026-11-15": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Período de evaluación institucional. Período de revisión y reflexión de la Práctica. Registro del mismo"
+      }
+    ],
+    "2026-11-16": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Período de evaluación institucional. Período de revisión y reflexión de la Práctica. Registro del mismo"
+      }
+    ],
+    "2026-11-17": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Período de evaluación institucional. Período de revisión y reflexión de la Práctica. Registro del mismo"
+      }
+    ],
+    "2026-11-18": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      },
+      {
+        "cat": "Información",
+        "desc": "Período de evaluación institucional. Período de revisión y reflexión de la Práctica. Registro del mismo"
+      }
+    ],
+    "2026-11-21": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-22": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-23": [
+      {
+        "cat": "Actividad Pedagógica",
+        "desc": "Exámenes Finales Tercer Turno (dos llamados). Carga de calificaciones en SIGAE WEB. Solicitar la emisión\ndel Título en caso que corresponda"
+      }
+    ],
+    "2026-11-30": [
+      {
+        "cat": "Información",
+        "desc": "Cierre de las actividades administrativas"
+      }
+    ]
+  }
+}
