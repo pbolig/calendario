@@ -1412,7 +1412,7 @@
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     // MODO PRODUCCIÓN: Si subes esto a GitHub Pages, cambia "TU-BACKEND-EN-RENDER" por tu URL real de Render.
     const PRODUCTION_API_URL = 'https://calendario-backend-t7m4.onrender.com/api';
-    const API_BASE = isLocalhost ? '/api' : PRODUCTION_API_URL;
+    const API_BASE = isLocalhost ? 'http://localhost:8001/api' : PRODUCTION_API_URL;
     const MC = ["#fce4ec", "#f3e5f5", "#e8eaf6", "#e3f2fd", "#e0f7fa", "#e8f5e9",
       "#fff8e1", "#fff3e0", "#fce4ec", "#e8eaf6", "#e0f2f1", "#f9fbe7"];
     const MA = ["#f48fb1", "#ce93d8", "#9fa8da", "#90caf9", "#80deea", "#a5d6a7",

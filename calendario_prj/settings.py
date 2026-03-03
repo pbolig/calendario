@@ -135,6 +135,8 @@ else:
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:8001",
         "http://127.0.0.1:8001",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
     ]
 
 # Hardcode the frontend domain to guarantee it works without Render env vars tweaking
