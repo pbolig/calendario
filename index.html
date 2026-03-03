@@ -1443,7 +1443,7 @@
 
     async function checkAuthStatus() {
       try {
-        const resp = await fetch(`${API_BASE}/auth/user/`, { credentials: 'same-origin' });
+        const resp = await fetch(`${API_BASE}/auth/user/`, { credentials: 'include' });
         if (resp.ok) {
           currentUser = await resp.json();
           document.getElementById('auth-overlay').style.display = 'none';
@@ -1523,7 +1523,7 @@
     // ── API CALLS ────────────────────────────────────────────────────────────────
     async function apiFetch(path, options = {}) {
       const resp = await fetch(`${API_BASE}${path}`, {
-        credentials: 'same-origin',
+        credentials: 'include',
         ...options,
         headers: {
           'Content-Type': 'application/json',
