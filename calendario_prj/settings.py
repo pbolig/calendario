@@ -136,12 +136,15 @@ else:
         "http://127.0.0.1:8001",
     ]
 
+# Hardcode the frontend domain to guarantee it works without Render env vars tweaking
+CORS_ALLOWED_ORIGINS.append("https://pbolig.github.io")
+
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://[-\w]+\.github\.io$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+CSRF_TRUSTED_ORIGINS = list(CORS_ALLOWED_ORIGINS)
 
 import os
 from environ import Env
