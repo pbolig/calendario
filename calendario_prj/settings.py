@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-@hhh61_xak0lm+c=2g-**%3l!!erlnv-cmq(^r$r2u5s+##t9v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+
+# ALLOWED_HOSTS from env (comma separated) or default to empty
+env_hosts = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else []
 
 
 # Application definition
@@ -122,15 +126,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8001",
-    "http://127.0.0.1:8001",
+# CORS Configuration
+env_cors = os.environ.get('CORS_ALLOWED_ORIGINS')
+if env_cors:
+    CORS_ALLOWED_ORIGINS = [origin.strip().rstrip('/') for origin in env_cors.split(',')]
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:8001",
+        "http://127.0.0.1:8001",
+    ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[-\w]+\.github\.io$",
 ]
+
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8001",
-    "http://127.0.0.1:8001",
-]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 import os
 from environ import Env
